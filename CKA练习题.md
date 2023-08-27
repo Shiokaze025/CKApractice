@@ -131,4 +131,34 @@ $ kubectl run t2 -it --image=radial/busyboxplus -n corp-net
 $ kubectl run t2 -it --image=radial/busyboxplus -n training
   # curl ip:80  （不能通）
 ```
+
 测试OK的话就可以把 yaml 文件里的改为 8080 ，然后 delete 了重新 apply
+
+## createService
+
+### Task
+
+请重新配置现有的 deployment front-end 并添加名为 http 的端口规范来公开现有容器 nginx 的端口 80/tcp
+
+创建一个名为 front-end-svc 的新服务，以公开容器端口 http
+
+配置此服务，以通过各个 pods 所在的节点上的 NodePort 来公开它们。
+
+### 参考
+
+```bash
+$ 
+
+```
+
+## scaledeployment
+
+### Task
+
+将 deployment loadbalancer 扩展至 3 个 pods.
+
+### 参考
+
+```bash
+$ kubectl scale --replicas=3 deployment/loadbalancer -n training
+```
