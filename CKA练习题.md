@@ -1,5 +1,31 @@
 # CKA 练习题
 
+- [CKA 练习题](#cka-练习题)
+  - [1. RBAC](#1-rbac)
+    - [Contex](#contex)
+    - [Task](#task)
+    - [参考](#参考)
+  - [2. node-drain](#2-node-drain)
+    - [Task](#task-1)
+    - [参考](#参考-1)
+  - [3. clusterupdate](#3-clusterupdate)
+    - [Task](#task-2)
+    - [参考](#参考-2)
+  - [5. NetworkPolicy](#5-networkpolicy)
+    - [Task](#task-3)
+    - [参考](#参考-3)
+  - [6. createService](#6-createservice)
+    - [Task](#task-4)
+    - [参考](#参考-4)
+  - [7. ingress](#7-ingress)
+  - [8. scaledeployment](#8-scaledeployment)
+    - [Task](#task-5)
+    - [参考](#参考-5)
+  - [9. schedulePod](#9-schedulepod)
+    - [Task](#task-6)
+    - [参考](#参考-6)
+
+
 ## 1. RBAC
 
 ### Contex  
@@ -196,6 +222,7 @@ spec:
       targetPort: http
       nodePort: 30007
 ```
+
 或者
 
 ```bash
@@ -222,7 +249,8 @@ $ kubectl scale --replicas=3 deployment/loadbalancer -n training
 
 ### Task
 
-按如下要求调度一个 pod   
+按如下要求调度一个 pod
+
 - 名称 : nginx-kusc00401
 - image : nginx
 - Node selector : disk=spinning
@@ -246,6 +274,7 @@ spec:
   nodeSelector:
     disk: spinning
 ```
+
 ```bash
 $ kubectl apply -f pod-schedule.yaml
 
