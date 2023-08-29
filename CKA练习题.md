@@ -1,6 +1,6 @@
 # CKA 练习题
 
-## RBAC
+## 1. RBAC
 
 ### Contex  
 
@@ -42,7 +42,7 @@ $ kubectl describe rolebinding -n app-team1
   1. 什么是集群的资源，什么是命名空间下的资源？
   2. rolebind、 clusterrole、serviceaccount等分别是什么
 
-## node-drain
+## 2. node-drain
 
 ### Task
 
@@ -58,7 +58,7 @@ $ kubectl cordon node1.k8s.training.com
 $ kubectl drain node1.k8s.training.com --ignore-daemonsets --delete-emptydir-data --force
   ```
 
-## clusterupdate
+## 3. clusterupdate
 
 ### Task
 
@@ -76,7 +76,7 @@ $ kubectl cordon master.k8s.training.com
 
 ```
 
-## NetworkPolicy
+## 5. NetworkPolicy
 
 ### Task
 
@@ -134,7 +134,7 @@ $ kubectl run t2 -it --image=radial/busyboxplus -n training
 
 测试OK的话就可以把 yaml 文件里的改为 8080 ，然后 delete 了重新 apply
 
-## createService
+## 6. createService
 
 ### Task
 
@@ -202,11 +202,11 @@ spec:
 $ kubectl expose deployment front-end --port=80 --target-port=http --name=front-end-svc2 --type=NodePort
 ```
 
-## ingress
+## 7. ingress
 
 TODO 还没装 ingress , 再说吧
 
-## scaledeployment
+## 8. scaledeployment
 
 ### Task
 
@@ -218,7 +218,7 @@ TODO 还没装 ingress , 再说吧
 $ kubectl scale --replicas=3 deployment/loadbalancer -n training
 ```
 
-## schedulePod
+## 9. schedulePod
 
 ### Task
 
