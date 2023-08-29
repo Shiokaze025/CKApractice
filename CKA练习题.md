@@ -202,6 +202,10 @@ spec:
 $ kubectl expose deployment front-end --port=80 --target-port=http --name=front-end-svc2 --type=NodePort
 ```
 
+## ingress
+
+TODO 还没装 ingress , 再说吧
+
 ## scaledeployment
 
 ### Task
@@ -214,7 +218,37 @@ $ kubectl expose deployment front-end --port=80 --target-port=http --name=front-
 $ kubectl scale --replicas=3 deployment/loadbalancer -n training
 ```
 
-## ingress
+## schedulePod
 
 ### Task
 
+按如下要求调度一个 pod   
+- 名称 : nginx-kusc00401
+- image : nginx
+- Node selector : disk=spinning
+
+### 参考
+
+同样可以在官网 copy 
+
+```yaml
+# pod-schedule.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-kusc00401
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+  nodeSelector:
+    disk: spinning
+```
+```bash
+$ kubectl apply -f pod-schedule.yaml
+
+# 查看是否调度到了目标 Node
+$ kubectl describe po nginx-kusc00401    # 看 Node
+```

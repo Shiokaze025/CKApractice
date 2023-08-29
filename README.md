@@ -6,3 +6,4 @@
 4. networkPolicy
 5. createservice
 6. scaledeployment
+7. schedulePod
