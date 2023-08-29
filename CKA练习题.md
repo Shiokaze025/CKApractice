@@ -146,9 +146,60 @@ $ kubectl run t2 -it --image=radial/busyboxplus -n training
 
 ### 参考
 
-```bash
-$ 
+（准备步骤）先创建练习用的 deploy front-end , yaml文件也可以在官网 copy
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-end
+  labels:
+    app: front-end
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front-end
+  template:
+    metadata:
+      labels:
+        app: front-end
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+```
+如果 front-end 中没有 http 的 80 端口，则 `kubectl edit deploy front-end`，在 containers 中添加
+```yaml
+ports:
+  - containerPort: 80
+    name: http
+    protocol: TCP
+```
+然后正式开始
 
+```yaml
+# front-end-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-end-svc
+spec:
+  type: NodePort
+  selector:
+    app: front-end
+  ports:
+    - port: 80
+      targetPort: http
+      nodePort: 30007
+```
+或者
+
+```bash
+$ kubectl expose deployment front-end --port=80 --target-port=http --name=front-end-svc2 --type=NodePort
 ```
 
 ## scaledeployment
@@ -162,3 +213,8 @@ $
 ```bash
 $ kubectl scale --replicas=3 deployment/loadbalancer -n training
 ```
+
+## ingress
+
+### Task
+
