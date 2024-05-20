@@ -29,6 +29,8 @@
 3. 重启kubelet，`systemctl daemon-reload` ，`systemctl restart kubelet`
 
 # 6. 创建Secret
+**任务——管理Secrets**
+**概念——配置——Secret**
 1. 获取secret的方式：  
    ```shell
    $ kubectl get -n istio-system get secret db1-test -o jsonpath='{.data}'
@@ -39,6 +41,47 @@
    $ kubectl create -n istio-system secret generic --help
    $ kubectl create secret generic my-secret --from-literal=key1=supersecret --from-literal=key2=topsecret
    ```
+3. 创建Pod，直接copy文档  
+
+# 7. Dockerfile检测
+1. 修改Dockerfile   
+   - 系统镜像的版本不能是`latest`
+   - 后面`CMD`有一段脚本执行，可能需要非特权用户，所以把执行用户改为`nobody`
+2. 修改yaml文件   
+   - template的标签和selector的标签对不上，需要修改下
+   ```yaml
+   {
+      ...
+      selector:
+        matchLables:
+          app: couchdb    # 需要一致
+          version: stable
+      template: 
+        metadata:
+          lables:
+            app: couchdb     # 需要一致
+            version: stable
+      ...
+   }
+   ```
+   - 修改安全上下文内的字段securityContext
+   ```yaml
+   {
+      ...
+      'privileged': False
+      'readOnlyRootFilesystem': True
+      'runAsUser': 65535
+      ...
+   }
+   ```
+
+# 8. 沙箱运行容器gVisor
+**概念——容器——容器运行时**   
+直接在文档copy
+
+# 9. 网络策略NetworkPolicy
+**概念——服务、负载均衡和联网——网络策略——按标签选择多个名字空间**  
+1. 
 
 
 # 16. ImagePolicy Webhook 容器镜像扫描
