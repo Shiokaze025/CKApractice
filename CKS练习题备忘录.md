@@ -81,7 +81,29 @@
 
 # 9. 网络策略NetworkPolicy
 **概念——服务、负载均衡和联网——网络策略——按标签选择多个名字空间**  
-1. 
+和参考文档不一致，待确定
+
+# 10. Trivy扫描镜像安全漏洞
+1. 先把namespace下的pod扫描出来，然后获取镜像
+```shell
+$ kubectl describe -n kamino po | grep -iE 'name:|image:'
+```
+
+2. 扫描镜像，并删除有高风险的pod
+```shell
+$ trivy image --help
+
+# 获得帮助的命令
+$ trivy image --severity HIGH,CRITICAL alpine:3.15
+
+$ for i in (amazonlinux:1,amazonlinux:2,nginx:1.19,vicuu/nginx:host); do trivy image -s HIGH,CRITICAL $i > &i.txt; done
+```
+
+# 11. AppArmor
+**教程——安全——使用AppArmor限制容器对资源的访问**  
+1. 查看apparmor_status
+2. 
+
 
 
 # 16. ImagePolicy Webhook 容器镜像扫描
