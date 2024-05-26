@@ -102,7 +102,27 @@ $ for i in (amazonlinux:1,amazonlinux:2,nginx:1.19,vicuu/nginx:host); do trivy i
 # 11. AppArmor
 **教程——安全——使用AppArmor限制容器对资源的访问**  
 1. 查看apparmor_status
-2. 
+2. 获取appArmor的名称 `nginx-profile-3`
+3. 参考文档修改yaml文件
+
+# 12. Sysdig & Falco
+1. 注意需要`sudo -i`，获取管理员权现
+2. 首先需要获取`cri`的`socket`
+   ```shell
+   $ crictl ps | grep redis123
+   ```
+3. 写`sysdig`的命令  
+   `sysdig [options] [-p <output_format>] [filter]`
+   - `[option]`: `-M` 时间30s，`--cri` 获取到的`socket`
+   - `-p`: 可以通过`sisdig -l | grep timestamp`,通过查询获取到格式化输出`%evt.time`,`%user.name`,`%user.id`,`%proc.name`
+   - `filter`: 容器名为`crictl`中查询到的容器名
+   ```shell
+   $ sysdig -M 30 -p "%evt.time,%user.uid/%user.name,%proc.name" --cri /run/containerd/containerd.sock container.name=redis123 >> /opt/xxxxxx/xxxxxx
+   ```
+
+# 13. Container安全上下文
+**任务——配置Pods和容器——为Pods或容器配置安全上下文**
+
 
 
 
