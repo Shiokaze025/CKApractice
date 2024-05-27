@@ -155,10 +155,21 @@ $ for i in (amazonlinux:1,amazonlinux:2,nginx:1.19,vicuu/nginx:host); do trivy i
 3. 删除匿名得clusterrolebing
    ```shell
    $ kubectl delete clusterrolebinding system:anonymous
-
+   ```
 
 # 16. ImagePolicy Webhook 容器镜像扫描
 **参考——API访问控制——准入控制器——ImagePolicyWebhook**
+1. 修改admission_configuration.json，校验控制配置并将其更改为隐式拒绝  
+   `defaultAllow`改为`true`
+2. 修改配置文件，编辑配置以正确指向提供的 HTTPS 端点  
+   `cluster`下增加`server`
+3. 修改`kube-apiserver`  
+   ```yaml
+   # 准入控制器，启⽤必要的插件来创建镜像策略
+   --enable-admission-plugins=NodeRestriction,ImagePolicyWebhook
+   # 准入控制器的配置文件
+   --admission-control-config-file=/etc/kubernetes/epconfig/admission_configuration.json
+   ```
 
 kube-apiserver.yaml中的两个属性配置还没找到，一个是定义准入控制器，一个是添加配置文件的目录。  
 
