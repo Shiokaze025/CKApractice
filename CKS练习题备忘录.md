@@ -121,9 +121,40 @@ $ for i in (amazonlinux:1,amazonlinux:2,nginx:1.19,vicuu/nginx:host); do trivy i
    ```
 
 # 13. Container安全上下文
-**任务——配置Pods和容器——为Pods或容器配置安全上下文**
+**任务——配置Pods和容器——为Pods或容器配置安全上下文**  
+在`container`下的安全上下文，有几个容器就需要添加几次
+1. `Pod`下的安全上下文  
+   - `runAsUser`,在增加Pod的安全上下文时，最好是先查找securityContext，去掉{}再修改
+2. `container`下的安全上下文
+   - `allowPrivilegeEscalation`
+   - `readOnlyRootFilesystem`
+  
+# 14. TLS安全配置
+**参考——组件工具——kube-apiserver**
+1. `kube-apiserver`:
+   - `--tls-min-version=VersionTLS13`
+   - `--tls-cipher-suites=TLS_AES_128_GCM_SHA256`
+2. `etcd`
+   - `cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`
 
+# 15. 启用API Server认证
+1. 以确保只允许经过⾝份验证和授权的 REST 请求
+   ```yaml
+   --anonymous-auth=false
+   ```
+2. 使⽤授权模式Node,RBAC和准⼊控制器NodeRestriction
+   ```yaml
+   --authorization-mode=Node,RBAC
+   --enable-admission-plugins=NodeRestriction
+   ```
+   **在删除匿名登录后，不能正常登录集群，需要使用考试提供的kubectl的配置文件**
+   ```shell
+   $ kubectl --kubeconfig=/etc/kubernetes/admin.conf get po
+   ```
 
+3. 删除匿名得clusterrolebing
+   ```shell
+   $ kubectl delete clusterrolebinding system:anonymous
 
 
 # 16. ImagePolicy Webhook 容器镜像扫描
