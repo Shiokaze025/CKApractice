@@ -96,7 +96,7 @@ $ trivy image --help
 # 获得帮助的命令
 $ trivy image --severity HIGH,CRITICAL alpine:3.15
 
-$ for i in (amazonlinux:1,amazonlinux:2,nginx:1.19,vicuu/nginx:host); do trivy image -s HIGH,CRITICAL $i > &i.txt; done
+$ for i in (amazonlinux:1,amazonlinux:2,nginx:1.19,vicuu/nginx:host); do trivy image -s HIGH,CRITICAL $i > $i.txt; done
 ```
 
 # 11. AppArmor
